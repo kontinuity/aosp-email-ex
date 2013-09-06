@@ -112,8 +112,8 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
 
     private static class EmailQuery {
         public static final String[] PROJECTION = {
-            Contacts.DISPLAY_NAME,  // 0
-            Email.DATA              // 1
+                Contacts.DISPLAY_NAME,  // 0
+                Email.DATA              // 1
         };
 
         public static final int NAME = 0;
@@ -134,12 +134,12 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
         private static final String DIRECTORY_TYPE_RESOURCE_ID = "typeResourceId";
 
         public static final String[] PROJECTION = {
-            DIRECTORY_ID,               // 0
-            DIRECTORY_ACCOUNT_NAME,     // 1
-            DIRECTORY_ACCOUNT_TYPE,     // 2
-            DIRECTORY_DISPLAY_NAME,     // 3
-            DIRECTORY_PACKAGE_NAME,     // 4
-            DIRECTORY_TYPE_RESOURCE_ID, // 5
+                DIRECTORY_ID,               // 0
+                DIRECTORY_ACCOUNT_NAME,     // 1
+                DIRECTORY_ACCOUNT_TYPE,     // 2
+                DIRECTORY_DISPLAY_NAME,     // 3
+                DIRECTORY_PACKAGE_NAME,     // 4
+                DIRECTORY_TYPE_RESOURCE_ID, // 5
         };
 
         public static final int ID = 0;
@@ -185,7 +185,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
                 cursor = mContentResolver.query(uri, EmailQuery.PROJECTION, null, null, null);
                 results.count = cursor.getCount();
             }
-            results.values = new Cursor[] { directoryCursor, cursor };
+            results.values = new Cursor[]{directoryCursor, cursor};
             return results;
         }
 
@@ -291,7 +291,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
      * Override to populate the autocomplete suggestion line item UI with data.
      */
     protected abstract void bindView(View view, String directoryType, String directoryName,
-            String displayName, String emailAddress);
+                                     String displayName, String emailAddress);
 
     /**
      * Override to create a view for a "Searching directory" line item, which is
@@ -306,14 +306,14 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
 
     @Override
     protected int getItemViewType(int partitionIndex, int position) {
-        DirectoryPartition partition = (DirectoryPartition)getPartition(partitionIndex);
+        DirectoryPartition partition = (DirectoryPartition) getPartition(partitionIndex);
         return partition.loading ? 1 : 0;
     }
 
     @Override
     protected View newView(Context context, int partitionIndex, Cursor cursor,
-            int position, ViewGroup parent) {
-        DirectoryPartition partition = (DirectoryPartition)getPartition(partitionIndex);
+                           int position, ViewGroup parent) {
+        DirectoryPartition partition = (DirectoryPartition) getPartition(partitionIndex);
         if (partition.loading) {
             return inflateItemViewLoading(parent);
         } else {
@@ -323,7 +323,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
 
     @Override
     protected void bindView(View v, int partition, Cursor cursor, int position) {
-        DirectoryPartition directoryPartition = (DirectoryPartition)getPartition(partition);
+        DirectoryPartition directoryPartition = (DirectoryPartition) getPartition(partition);
         String directoryType = directoryPartition.directoryType;
         String directoryName = directoryPartition.displayName;
         if (directoryPartition.loading) {
@@ -351,7 +351,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
     }
 
     private boolean isLoading(int partitionIndex) {
-        return ((DirectoryPartition)getPartition(partitionIndex)).loading;
+        return ((DirectoryPartition) getPartition(partitionIndex)).loading;
     }
 
     @Override
@@ -594,7 +594,7 @@ public abstract class BaseEmailAddressAdapter extends CompositeCursorAdapter imp
         String displayName = cursor.getString(EmailQuery.NAME);
         String emailAddress = cursor.getString(EmailQuery.ADDRESS);
         if (TextUtils.isEmpty(displayName) || TextUtils.equals(displayName, emailAddress)) {
-             return emailAddress;
+            return emailAddress;
         } else {
             return new Rfc822Token(displayName, emailAddress, null).toString();
         }

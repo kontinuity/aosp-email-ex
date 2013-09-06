@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 
 /**
  * Tests for {@link CompositeCursorAdapter}.
- *
+ * <p/>
  * To execute, run:
  * <pre>
  *   adb shell am instrument -e class com.android.common.widget.CompositeCursorAdapterTest \
@@ -56,7 +56,7 @@ public class CompositeCursorAdapterTest extends AndroidTestCase {
 
         @Override
         protected View newView(Context context, int sectionIndex, Cursor cursor, int position,
-                ViewGroup parent) {
+                               ViewGroup parent) {
             return new View(context);
         }
 

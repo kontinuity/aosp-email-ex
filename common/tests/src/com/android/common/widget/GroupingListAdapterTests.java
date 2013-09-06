@@ -30,17 +30,17 @@ import android.view.ViewGroup;
 
 /**
  * Tests for {@link GroupingListAdapter}.
- *
+ * <p/>
  * Running all tests:
- *
- *   adb shell am instrument -e class com.android.common.widget.GroupingListAdapterTests \
- *     -w com.android.common.tests/android.test.InstrumentationTestRunner
+ * <p/>
+ * adb shell am instrument -e class com.android.common.widget.GroupingListAdapterTests \
+ * -w com.android.common.tests/android.test.InstrumentationTestRunner
  */
 public class GroupingListAdapterTests extends AndroidTestCase {
 
-    static private final String[] PROJECTION = new String[] {
-        "_id",
-        "group",
+    static private final String[] PROJECTION = new String[]{
+            "_id",
+            "group",
     };
 
     private static final int GROUPING_COLUMN_INDEX = 1;
@@ -81,7 +81,7 @@ public class GroupingListAdapterTests extends AndroidTestCase {
 
         @Override
         protected void bindGroupView(View view, Context context, Cursor cursor, int groupSize,
-                boolean expanded) {
+                                     boolean expanded) {
         }
 
         @Override
@@ -299,7 +299,7 @@ public class GroupingListAdapterTests extends AndroidTestCase {
     }
 
     private void assertPositionMetadata(int position, int itemType, boolean isExpanded,
-            int cursorPosition) {
+                                        int cursorPosition) {
         GroupingListAdapter.PositionMetadata metadata = new GroupingListAdapter.PositionMetadata();
         mAdapter.obtainPositionMetadata(metadata, position);
         assertEquals(itemType, metadata.itemType);

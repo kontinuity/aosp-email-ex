@@ -31,8 +31,13 @@ public class OperationSchedulerTest extends AndroidTestCase {
         public long timeMillis = DEFAULT_TIME;
 
         @Override
-        protected long currentTimeMillis() { return timeMillis; }
-        public TimeTravelScheduler() { super(getFreshStorage()); }
+        protected long currentTimeMillis() {
+            return timeMillis;
+        }
+
+        public TimeTravelScheduler() {
+            super(getFreshStorage());
+        }
     }
 
     private SharedPreferences getFreshStorage() {
@@ -157,27 +162,27 @@ public class OperationSchedulerTest extends AndroidTestCase {
 
     @SmallTest
     public void testParseOptions() throws Exception {
-         OperationScheduler.Options options = new OperationScheduler.Options();
-         assertEquals(
-                 "OperationScheduler.Options[backoff=0.0+5.0 max=86400.0 min=0.0 period=3600.0]",
-                 OperationScheduler.parseOptions("3600", options).toString());
+        OperationScheduler.Options options = new OperationScheduler.Options();
+        assertEquals(
+                "OperationScheduler.Options[backoff=0.0+5.0 max=86400.0 min=0.0 period=3600.0]",
+                OperationScheduler.parseOptions("3600", options).toString());
 
-         assertEquals(
-                 "OperationScheduler.Options[backoff=0.0+2.5 max=86400.0 min=0.0 period=3700.0]",
-                 OperationScheduler.parseOptions("backoff=+2.5 3700", options).toString());
+        assertEquals(
+                "OperationScheduler.Options[backoff=0.0+2.5 max=86400.0 min=0.0 period=3700.0]",
+                OperationScheduler.parseOptions("backoff=+2.5 3700", options).toString());
 
-         assertEquals(
-                 "OperationScheduler.Options[backoff=10.0+2.5 max=12345.6 min=7.0 period=3800.0]",
-                 OperationScheduler.parseOptions("max=12345.6 min=7 backoff=10 period=3800",
-                         options).toString());
-
-         assertEquals(
+        assertEquals(
                 "OperationScheduler.Options[backoff=10.0+2.5 max=12345.6 min=7.0 period=3800.0]",
-                 OperationScheduler.parseOptions("", options).toString());
+                OperationScheduler.parseOptions("max=12345.6 min=7 backoff=10 period=3800",
+                        options).toString());
 
-         assertEquals(
-                 "OperationScheduler.Options[backoff=5.0+2.5+10.0 max=12345.6 min=7.0 period=3600.0]",
-                 OperationScheduler.parseOptions("backoff=5.0++10.0 3600", options).toString());
+        assertEquals(
+                "OperationScheduler.Options[backoff=10.0+2.5 max=12345.6 min=7.0 period=3800.0]",
+                OperationScheduler.parseOptions("", options).toString());
+
+        assertEquals(
+                "OperationScheduler.Options[backoff=5.0+2.5+10.0 max=12345.6 min=7.0 period=3600.0]",
+                OperationScheduler.parseOptions("backoff=5.0++10.0 3600", options).toString());
     }
 
     @SmallTest

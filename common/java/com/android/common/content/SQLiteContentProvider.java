@@ -74,7 +74,7 @@ public abstract class SQLiteContentProvider extends ContentProvider
      * The equivalent of the {@link #update} method, but invoked within a transaction.
      */
     protected abstract int updateInTransaction(Uri uri, ContentValues values, String selection,
-            String[] selectionArgs);
+                                               String[] selectionArgs);
 
     /**
      * The equivalent of the {@link #delete} method, but invoked within a transaction.

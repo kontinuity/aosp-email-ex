@@ -26,11 +26,12 @@ URL_PREFIX = r"""
 
 URL_SUFFIX = ';'
 
+
 class Bucket:
     def __init__(self, baseLetter):
-        self.base=baseLetter
-        self.words=[]
-        self.letters=[]
+        self.base = baseLetter
+        self.words = []
+        self.letters = []
 
     def dump(self, isWebUrl=False, isFirst=False, isLast=False):
         if (len(self.words) == 0) and (len(self.letters) == 0):
@@ -98,6 +99,7 @@ class Bucket:
         else:
             self.words.append(line)
 
+
 def getBucket(buckets, line):
     letter = line[0]
     bucket = buckets.get(letter)
@@ -107,6 +109,7 @@ def getBucket(buckets, line):
         buckets[letter] = bucket
 
     return bucket
+
 
 def makePattern(prefix, suffix, buckets, isWebUrl=False):
     output = prefix
@@ -127,6 +130,7 @@ def makePattern(prefix, suffix, buckets, isWebUrl=False):
 
     print output
 
+
 if __name__ == "__main__":
     f = urlopen('http://data.iana.org/TLD/tlds-alpha-by-domain.txt')
     domains = f.readlines()
@@ -141,10 +145,10 @@ if __name__ == "__main__":
             getBucket(buckets, domain[0]).add(domain.strip())
 
         if domain.startswith('xn--'):
-	   puny = domain.strip()[4:]
-	   result = puny.decode('punycode')
-	   result = repr(result)
-           getBucket(buckets, 'xn--').add(result[2:-1])
+            puny = domain.strip()[4:]
+            result = puny.decode('punycode')
+            result = repr(result)
+            getBucket(buckets, 'xn--').add(result[2:-1])
 
     makePattern(TLD_PREFIX, TLD_SUFFIX, buckets, isWebUrl=False)
     makePattern(URL_PREFIX, URL_SUFFIX, buckets, isWebUrl=True)

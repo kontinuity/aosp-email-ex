@@ -130,7 +130,7 @@ public class ChipsTest extends AndroidTestCase {
         }
 
         public TestBaseRecipientAdapter(final Context context, final int preferredMaxResultCount,
-                final int queryMode) {
+                                        final int queryMode) {
             super(context, preferredMaxResultCount, queryMode);
         }
     }
@@ -249,7 +249,7 @@ public class ChipsTest extends AndroidTestCase {
         String second = (String) mTokenizer.terminateToken("SECOND");
         String third = (String) mTokenizer.terminateToken("THIRD");
         mEditable = new SpannableStringBuilder();
-        mEditable.append(first+second+third);
+        mEditable.append(first + second + third);
         int thirdStart = mEditable.toString().indexOf(third);
         int thirdEnd = thirdStart + third.trim().length();
         view.createMoreChipPlainText();
@@ -267,7 +267,7 @@ public class ChipsTest extends AndroidTestCase {
         String fourth = "FOURTH,";
         String fifth = "FIFTH,";
         mEditable = new SpannableStringBuilder();
-        mEditable.append(first+second+third+fourth+fifth);
+        mEditable.append(first + second + third + fourth + fifth);
         assertEquals(view.countTokens(mEditable), 5);
     }
 
@@ -300,7 +300,7 @@ public class ChipsTest extends AndroidTestCase {
         String second = (String) mTokenizer.terminateToken("SECOND");
         String third = (String) mTokenizer.terminateToken("THIRD");
         mEditable = new SpannableStringBuilder();
-        mEditable.append(first+second+third);
+        mEditable.append(first + second + third);
 
         int firstStart = mEditable.toString().indexOf(first);
         int firstEnd = firstStart + first.trim().length();
@@ -313,7 +313,7 @@ public class ChipsTest extends AndroidTestCase {
         mEditable.setSpan(mMockRecips[mMockRecips.length - 1], thirdStart, thirdEnd, 0);
 
         view.createMoreChip();
-        assertEquals(mEditable.toString(), first+second+third);
+        assertEquals(mEditable.toString(), first + second + third);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 3]), firstStart);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 2]), secondStart);
         // Find the more chip.
@@ -322,7 +322,7 @@ public class ChipsTest extends AndroidTestCase {
         assertEquals(mEditable.getSpanEnd(moreChip), thirdEnd + 1);
 
         view.removeMoreChip();
-        assertEquals(mEditable.toString(), first+second+third);
+        assertEquals(mEditable.toString(), first + second + third);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 3]), firstStart);
         assertEquals(mEditable.getSpanEnd(mMockRecips[mMockRecips.length - 3]), firstEnd);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 2]), secondStart);
@@ -333,7 +333,7 @@ public class ChipsTest extends AndroidTestCase {
 
         // Rinse and repeat, just in case!
         view.createMoreChip();
-        assertEquals(mEditable.toString(), first+second+third);
+        assertEquals(mEditable.toString(), first + second + third);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 3]), firstStart);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 2]), secondStart);
         // Find the more chip.
@@ -342,7 +342,7 @@ public class ChipsTest extends AndroidTestCase {
         assertEquals(mEditable.getSpanEnd(moreChip), thirdEnd + 1);
 
         view.removeMoreChip();
-        assertEquals(mEditable.toString(), first+second+third);
+        assertEquals(mEditable.toString(), first + second + third);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 3]), firstStart);
         assertEquals(mEditable.getSpanEnd(mMockRecips[mMockRecips.length - 3]), firstEnd);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 2]), secondStart);
@@ -368,7 +368,7 @@ public class ChipsTest extends AndroidTestCase {
         String ninth = (String) mTokenizer.terminateToken("NINTH");
         String tenth = (String) mTokenizer.terminateToken("TENTH");
         mEditable = new SpannableStringBuilder();
-        mEditable.append(first+second+third+fourth+fifth+sixth+seventh+eigth+ninth+tenth);
+        mEditable.append(first + second + third + fourth + fifth + sixth + seventh + eigth + ninth + tenth);
 
         int firstStart = mEditable.toString().indexOf(first);
         int firstEnd = firstStart + first.trim().length();
@@ -440,7 +440,7 @@ public class ChipsTest extends AndroidTestCase {
         String second = (String) mTokenizer.terminateToken("SE,COND");
         String third = (String) mTokenizer.terminateToken("THI,RD");
         mEditable = new SpannableStringBuilder();
-        mEditable.append(first+second+third);
+        mEditable.append(first + second + third);
 
         int firstStart = mEditable.toString().indexOf(first);
         int firstEnd = firstStart + first.trim().length();
@@ -453,7 +453,7 @@ public class ChipsTest extends AndroidTestCase {
         mEditable.setSpan(mMockRecips[mMockRecips.length - 1], thirdStart, thirdEnd, 0);
 
         view.createMoreChip();
-        assertEquals(mEditable.toString(), first+second+third);
+        assertEquals(mEditable.toString(), first + second + third);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 3]), firstStart);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 2]), secondStart);
         // Find the more chip.
@@ -462,7 +462,7 @@ public class ChipsTest extends AndroidTestCase {
         assertEquals(mEditable.getSpanEnd(moreChip), thirdEnd + 1);
 
         view.removeMoreChip();
-        assertEquals(mEditable.toString(), first+second+third);
+        assertEquals(mEditable.toString(), first + second + third);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 3]), firstStart);
         assertEquals(mEditable.getSpanEnd(mMockRecips[mMockRecips.length - 3]), firstEnd);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 2]), secondStart);
@@ -481,7 +481,7 @@ public class ChipsTest extends AndroidTestCase {
         String second = (String) mTokenizer.terminateToken("SECOND");
         String third = (String) mTokenizer.terminateToken("THIRD");
         mEditable = new SpannableStringBuilder();
-        mEditable.append(first+second+third+third);
+        mEditable.append(first + second + third + third);
 
         int firstStart = mEditable.toString().indexOf(first);
         int firstEnd = firstStart + first.trim().length();
@@ -497,7 +497,7 @@ public class ChipsTest extends AndroidTestCase {
         mEditable.setSpan(mMockRecips[mMockRecips.length - 1], thirdNextStart, thirdNextEnd, 0);
 
         view.createMoreChip();
-        assertEquals(mEditable.toString(), first+second+third+third);
+        assertEquals(mEditable.toString(), first + second + third + third);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 4]), firstStart);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 3]), secondStart);
         // Find the more chip.
@@ -506,7 +506,7 @@ public class ChipsTest extends AndroidTestCase {
         assertEquals(mEditable.getSpanEnd(moreChip), thirdNextEnd + 1);
 
         view.removeMoreChip();
-        assertEquals(mEditable.toString(), first+second+third+third);
+        assertEquals(mEditable.toString(), first + second + third + third);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 4]), firstStart);
         assertEquals(mEditable.getSpanEnd(mMockRecips[mMockRecips.length - 4]), firstEnd);
         assertEquals(mEditable.getSpanStart(mMockRecips[mMockRecips.length - 3]), secondStart);
@@ -949,17 +949,17 @@ public class ChipsTest extends AndroidTestCase {
      * </p>
      * <p>
      * For example, a bug was seen where
-     *
+     * <p/>
      * <pre>
      * "Android User" <android@example.com>
      * </pre>
-     *
+     * <p/>
      * was converted to
-     *
+     * <p/>
      * <pre>
      * Android User [android@example.com]
      * </pre>
-     *
+     * <p/>
      * where text inside [] is a chip.
      * </p>
      */

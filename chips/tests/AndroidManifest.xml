@@ -15,16 +15,16 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.android.ex.chipstests"
-        android:sharedUserId="com.android.uid.test">
+          package="com.android.ex.chipstests"
+          android:sharedUserId="com.android.uid.test">
 
     <application>
-        <uses-library android:name="android.test.runner" />
+        <uses-library android:name="android.test.runner"/>
     </application>
 
     <!-- Run tests with "runtest android-common" -->
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-            android:targetPackage="com.android.ex.chipstests"
-            android:label="Chips Tests" />
+                     android:targetPackage="com.android.ex.chipstests"
+                     android:label="Chips Tests"/>
 
 </manifest>

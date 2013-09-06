@@ -67,6 +67,7 @@ public class RecipientAlternatesAdapter extends CursorAdapter {
 
     public interface RecipientMatchCallback {
         public void matchesFound(Map<String, RecipientEntry> results);
+
         /**
          * Called with all addresses that could not be resolved to valid recipients.
          */
@@ -74,7 +75,7 @@ public class RecipientAlternatesAdapter extends CursorAdapter {
     }
 
     public static void getMatchingRecipients(Context context, ArrayList<String> inAddresses,
-            Account account, RecipientMatchCallback callback) {
+                                             Account account, RecipientMatchCallback callback) {
         getMatchingRecipients(context, inAddresses, QUERY_TYPE_EMAIL, account, callback);
     }
 
@@ -83,13 +84,13 @@ public class RecipientAlternatesAdapter extends CursorAdapter {
      * information for a contact with the provided address, if one exists. This
      * may block the UI, so run it in an async task.
      *
-     * @param context Context.
+     * @param context     Context.
      * @param inAddresses Array of addresses on which to perform the lookup.
-     * @param callback RecipientMatchCallback called when a match or matches are found.
+     * @param callback    RecipientMatchCallback called when a match or matches are found.
      * @return HashMap<String,RecipientEntry>
      */
     public static void getMatchingRecipients(Context context, ArrayList<String> inAddresses,
-            int addressType, Account account, RecipientMatchCallback callback) {
+                                             int addressType, Account account, RecipientMatchCallback callback) {
         Queries.Query query;
         if (addressType == QUERY_TYPE_EMAIL) {
             query = Queries.EMAIL;
@@ -238,7 +239,7 @@ public class RecipientAlternatesAdapter extends CursorAdapter {
      * no significant differences are found.
      */
     static RecipientEntry getBetterRecipient(final RecipientEntry entry1,
-            final RecipientEntry entry2) {
+                                             final RecipientEntry entry2) {
         // If only one has passed in, use it
         if (entry2 == null) {
             return entry1;
@@ -286,7 +287,7 @@ public class RecipientAlternatesAdapter extends CursorAdapter {
     }
 
     private static Cursor doQuery(CharSequence constraint, int limit, Long directoryId,
-            Account account, ContentResolver resolver, Query query) {
+                                  Account account, ContentResolver resolver, Query query) {
         final Uri.Builder builder = query
                 .getContentFilterUri()
                 .buildUpon()
@@ -307,12 +308,12 @@ public class RecipientAlternatesAdapter extends CursorAdapter {
     }
 
     public RecipientAlternatesAdapter(Context context, long contactId, long currentId,
-            OnCheckedItemChangedListener listener) {
+                                      OnCheckedItemChangedListener listener) {
         this(context, contactId, currentId, QUERY_TYPE_EMAIL, listener);
     }
 
     public RecipientAlternatesAdapter(Context context, long contactId, long currentId,
-            int queryMode, OnCheckedItemChangedListener listener) {
+                                      int queryMode, OnCheckedItemChangedListener listener) {
         super(context, getCursorForConstruction(context, contactId, queryMode), 0);
         mLayoutInflater = LayoutInflater.from(context);
         mCurrentId = currentId;
@@ -334,33 +335,34 @@ public class RecipientAlternatesAdapter extends CursorAdapter {
             cursor = context.getContentResolver().query(
                     Queries.EMAIL.getContentUri(),
                     Queries.EMAIL.getProjection(),
-                    Queries.EMAIL.getProjection()[Queries.Query.CONTACT_ID] + " =?", new String[] {
-                        String.valueOf(contactId)
-                    }, null);
+                    Queries.EMAIL.getProjection()[Queries.Query.CONTACT_ID] + " =?", new String[]{
+                    String.valueOf(contactId)
+            }, null);
         } else {
             cursor = context.getContentResolver().query(
                     Queries.PHONE.getContentUri(),
                     Queries.PHONE.getProjection(),
-                    Queries.PHONE.getProjection()[Queries.Query.CONTACT_ID] + " =?", new String[] {
-                        String.valueOf(contactId)
-                    }, null);
+                    Queries.PHONE.getProjection()[Queries.Query.CONTACT_ID] + " =?", new String[]{
+                    String.valueOf(contactId)
+            }, null);
         }
         return removeDuplicateDestinations(cursor);
     }
 
     /**
      * @return a new cursor based on the given cursor with all duplicate destinations removed.
-     *
-     * It's only intended to use for the alternate list, so...
-     * - This method ignores all other fields and dedupe solely on the destination.  Normally,
-     * if a cursor contains multiple contacts and they have the same destination, we'd still want
-     * to show both.
-     * - This method creates a MatrixCursor, so all data will be kept in memory.  We wouldn't want
-     * to do this if the original cursor is large, but it's okay here because the alternate list
-     * won't be that big.
+     *         <p/>
+     *         It's only intended to use for the alternate list, so...
+     *         - This method ignores all other fields and dedupe solely on the destination.  Normally,
+     *         if a cursor contains multiple contacts and they have the same destination, we'd still want
+     *         to show both.
+     *         - This method creates a MatrixCursor, so all data will be kept in memory.  We wouldn't want
+     *         to do this if the original cursor is large, but it's okay here because the alternate list
+     *         won't be that big.
      */
     // Visible for testing
-    /* package */ static Cursor removeDuplicateDestinations(Cursor original) {
+    /* package */
+    static Cursor removeDuplicateDestinations(Cursor original) {
         final MatrixCursor result = new MatrixCursor(
                 original.getColumnNames(), original.getCount());
         final HashSet<String> destinationsSeen = new HashSet<String>();
@@ -373,7 +375,7 @@ public class RecipientAlternatesAdapter extends CursorAdapter {
             }
             destinationsSeen.add(destination);
 
-            result.addRow(new Object[] {
+            result.addRow(new Object[]{
                     original.getString(Query.NAME),
                     original.getString(Query.DESTINATION),
                     original.getInt(Query.DESTINATION_TYPE),
@@ -382,7 +384,7 @@ public class RecipientAlternatesAdapter extends CursorAdapter {
                     original.getLong(Query.DATA_ID),
                     original.getString(Query.PHOTO_THUMBNAIL_URI),
                     original.getInt(Query.DISPLAY_NAME_SOURCE)
-                    });
+            });
         }
 
         return result;

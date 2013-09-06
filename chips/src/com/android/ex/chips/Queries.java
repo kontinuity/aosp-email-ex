@@ -27,7 +27,7 @@ import android.provider.ContactsContract.Contacts;
  */
 /* package */ class Queries {
 
-    public static final Query PHONE = new Query(new String[] {
+    public static final Query PHONE = new Query(new String[]{
             Contacts.DISPLAY_NAME,       // 0
             Phone.NUMBER,                // 1
             Phone.TYPE,                  // 2
@@ -36,12 +36,12 @@ import android.provider.ContactsContract.Contacts;
             Phone._ID,                   // 5
             Contacts.PHOTO_THUMBNAIL_URI,// 6
             Contacts.DISPLAY_NAME_SOURCE // 7
-        }, Phone.CONTENT_FILTER_URI, Phone.CONTENT_URI) {
+    }, Phone.CONTENT_FILTER_URI, Phone.CONTENT_URI) {
 
-            @Override
-            public CharSequence getTypeLabel(Resources res, int type, CharSequence label) {
-                return Phone.getTypeLabel(res, type, label);
-            }
+        @Override
+        public CharSequence getTypeLabel(Resources res, int type, CharSequence label) {
+            return Phone.getTypeLabel(res, type, label);
+        }
 
     };
 
@@ -54,12 +54,12 @@ import android.provider.ContactsContract.Contacts;
             Email._ID,                   // 5
             Contacts.PHOTO_THUMBNAIL_URI,// 6
             Contacts.DISPLAY_NAME_SOURCE // 7
-        }, Email.CONTENT_FILTER_URI, Email.CONTENT_URI) {
+    }, Email.CONTENT_FILTER_URI, Email.CONTENT_URI) {
 
-            @Override
-            public CharSequence getTypeLabel(Resources res, int type, CharSequence label) {
-                return Email.getTypeLabel(res, type, label);
-            }
+        @Override
+        public CharSequence getTypeLabel(Resources res, int type, CharSequence label) {
+            return Email.getTypeLabel(res, type, label);
+        }
 
     };
 
@@ -77,7 +77,7 @@ import android.provider.ContactsContract.Contacts;
         public static final int PHOTO_THUMBNAIL_URI = 6; // String
         public static final int DISPLAY_NAME_SOURCE = 7; // int
 
-        public Query (String[] projection, Uri contentFilter, Uri content) {
+        public Query(String[] projection, Uri contentFilter, Uri content) {
             mProjection = projection;
             mContentFilterUri = contentFilter;
             mContentUri = content;

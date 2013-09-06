@@ -31,8 +31,8 @@ class SingleRecipientArrayAdapter extends ArrayAdapter<RecipientEntry> {
     private final LayoutInflater mLayoutInflater;
 
     public SingleRecipientArrayAdapter(Context context, int resourceId, RecipientEntry entry) {
-        super(context, resourceId, new RecipientEntry[] {
-            entry
+        super(context, resourceId, new RecipientEntry[]{
+                entry
         });
         mLayoutInflater = LayoutInflater.from(context);
         mLayoutId = resourceId;

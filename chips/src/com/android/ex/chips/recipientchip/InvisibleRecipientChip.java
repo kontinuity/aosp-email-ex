@@ -83,13 +83,13 @@ public class InvisibleRecipientChip extends ReplacementSpan implements DrawableR
 
     @Override
     public void draw(final Canvas canvas, final CharSequence text, final int start, final int end,
-            final float x, final int top, final int y, final int bottom, final Paint paint) {
+                     final float x, final int top, final int y, final int bottom, final Paint paint) {
         // Do nothing.
     }
 
     @Override
     public int getSize(final Paint paint, final CharSequence text, final int start, final int end,
-            final Paint.FontMetricsInt fm) {
+                       final Paint.FontMetricsInt fm) {
         return 0;
     }
 

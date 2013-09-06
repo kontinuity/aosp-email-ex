@@ -101,21 +101,37 @@ public class EditStyledText extends EditText {
     /**
      * Modes of editing actions.
      */
-    /** The mode that no editing action is done. */
+    /**
+     * The mode that no editing action is done.
+     */
     public static final int MODE_NOTHING = 0;
-    /** The mode of copy. */
+    /**
+     * The mode of copy.
+     */
     public static final int MODE_COPY = 1;
-    /** The mode of paste. */
+    /**
+     * The mode of paste.
+     */
     public static final int MODE_PASTE = 2;
-    /** The mode of changing size. */
+    /**
+     * The mode of changing size.
+     */
     public static final int MODE_SIZE = 3;
-    /** The mode of changing color. */
+    /**
+     * The mode of changing color.
+     */
     public static final int MODE_COLOR = 4;
-    /** The mode of selection. */
+    /**
+     * The mode of selection.
+     */
     public static final int MODE_SELECT = 5;
-    /** The mode of changing alignment. */
+    /**
+     * The mode of changing alignment.
+     */
     public static final int MODE_ALIGN = 6;
-    /** The mode of changing cut. */
+    /**
+     * The mode of changing cut.
+     */
     public static final int MODE_CUT = 7;
     public static final int MODE_TELOP = 8;
     public static final int MODE_SWING = 9;
@@ -137,13 +153,21 @@ public class EditStyledText extends EditText {
     /**
      * States of selection.
      */
-    /** The state that selection isn't started. */
+    /**
+     * The state that selection isn't started.
+     */
     public static final int STATE_SELECT_OFF = 0;
-    /** The state that selection is started. */
+    /**
+     * The state that selection is started.
+     */
     public static final int STATE_SELECT_ON = 1;
-    /** The state that selection is done, but not fixed. */
+    /**
+     * The state that selection is done, but not fixed.
+     */
     public static final int STATE_SELECTED = 2;
-    /** The state that selection is done and not fixed. */
+    /**
+     * The state that selection is done and not fixed.
+     */
     public static final int STATE_SELECT_FIX = 3;
 
     /**
@@ -526,7 +550,7 @@ public class EditStyledText extends EditText {
     /**
      * Notify the event that the mode and state are changed.
      *
-     * @param mode Mode of the editing action.
+     * @param mode  Mode of the editing action.
      * @param state Mode of the selection state.
      */
     private void notifyStateChanged(int mode, int state) {
@@ -537,12 +561,16 @@ public class EditStyledText extends EditText {
         }
     }
 
-    /** Start to edit styled text */
+    /**
+     * Start to edit styled text
+     */
     public void onStartEdit() {
         mManager.onAction(MODE_START_EDIT);
     }
 
-    /** End of editing styled text */
+    /**
+     * End of editing styled text
+     */
     public void onEndEdit() {
         mManager.onAction(MODE_END_EDIT);
     }
@@ -551,37 +579,51 @@ public class EditStyledText extends EditText {
         mManager.onAction(MODE_RESET);
     }
 
-    /** Start to copy styled text */
+    /**
+     * Start to copy styled text
+     */
     public void onStartCopy() {
         mManager.onAction(MODE_COPY);
     }
 
-    /** Start to cut styled text */
+    /**
+     * Start to cut styled text
+     */
     public void onStartCut() {
         mManager.onAction(MODE_CUT);
     }
 
-    /** Start to paste styled text */
+    /**
+     * Start to paste styled text
+     */
     public void onStartPaste() {
         mManager.onAction(MODE_PASTE);
     }
 
-    /** Start to change size */
+    /**
+     * Start to change size
+     */
     public void onStartSize() {
         mManager.onAction(MODE_SIZE);
     }
 
-    /** Start to change color */
+    /**
+     * Start to change color
+     */
     public void onStartColor() {
         mManager.onAction(MODE_COLOR);
     }
 
-    /** Start to change background color */
+    /**
+     * Start to change background color
+     */
     public void onStartBackgroundColor() {
         mManager.onAction(MODE_BGCOLOR);
     }
 
-    /** Start to change Alignment */
+    /**
+     * Start to change Alignment
+     */
     public void onStartAlign() {
         mManager.onAction(MODE_ALIGN);
     }
@@ -598,12 +640,16 @@ public class EditStyledText extends EditText {
         mManager.onAction(MODE_MARQUEE);
     }
 
-    /** Start to select a text */
+    /**
+     * Start to select a text
+     */
     public void onStartSelect() {
         mManager.onStartSelect(true);
     }
 
-    /** Start to select all characters */
+    /**
+     * Start to select all characters
+     */
     public void onStartSelectAll() {
         mManager.onStartSelectAll(true);
     }
@@ -620,7 +666,9 @@ public class EditStyledText extends EditText {
         mManager.onAction(mode, notifyStateChanged);
     }
 
-    /** Fix selection */
+    /**
+     * Fix selection
+     */
     public void onFixSelectedItem() {
         mManager.onFixSelectedItem();
     }
@@ -745,23 +793,23 @@ public class EditStyledText extends EditText {
      *
      * @param colortitle Title for Alert Dialog.
      * @param colornames List of name of selecting color.
-     * @param colorints List of int of color.
+     * @param colorints  List of int of color.
      */
     public void setColorAlertParams(CharSequence colortitle, CharSequence[] colornames,
-            CharSequence[] colorints, CharSequence transparent) {
+                                    CharSequence[] colorints, CharSequence transparent) {
         mDialog.setColorAlertParams(colortitle, colornames, colorints, transparent);
     }
 
     /**
      * Set Parameters for SizeAlertDialog.
      *
-     * @param sizetitle Title for Alert Dialog.
-     * @param sizenames List of name of selecting size.
+     * @param sizetitle       Title for Alert Dialog.
+     * @param sizenames       List of name of selecting size.
      * @param sizedisplayints List of int of size displayed in TextView.
-     * @param sizesendints List of int of size exported to HTML.
+     * @param sizesendints    List of int of size exported to HTML.
      */
     public void setSizeAlertParams(CharSequence sizetitle, CharSequence[] sizenames,
-            CharSequence[] sizedisplayints, CharSequence[] sizesendints) {
+                                   CharSequence[] sizedisplayints, CharSequence[] sizesendints) {
         mDialog.setSizeAlertParams(sizetitle, sizenames, sizedisplayints, sizesendints);
     }
 
@@ -774,7 +822,7 @@ public class EditStyledText extends EditText {
     }
 
     public void setContextMenuStrings(CharSequence horizontalline, CharSequence clearstyles,
-            CharSequence paste) {
+                                      CharSequence paste) {
         STR_HORIZONTALLINE = horizontalline;
         STR_CLEARSTYLES = clearstyles;
         STR_PASTE = paste;
@@ -899,7 +947,9 @@ public class EditStyledText extends EditText {
         return mPaddingScale;
     }
 
-    /** Convert pixcel to DIP */
+    /**
+     * Convert pixcel to DIP
+     */
     private int dipToPx(int dip) {
         if (mPaddingScale <= 0) {
             mPaddingScale = getContext().getResources().getDisplayMetrics().density;
@@ -1318,7 +1368,7 @@ public class EditStyledText extends EditText {
         }
 
         public void
-                updateSpanPreviousFromCursor(Editable txt, int start, int before, int after) {
+        updateSpanPreviousFromCursor(Editable txt, int start, int before, int after) {
             if (DBG) {
                 Log.d(LOG_TAG, "updateSpanPrevious:" + start + "," + before + "," + after);
             }
@@ -1407,7 +1457,9 @@ public class EditStyledText extends EditText {
             }
         }
 
-        /** canPaste returns true only if ClipboardManager doen't contain text. */
+        /**
+         * canPaste returns true only if ClipboardManager doen't contain text.
+         */
         public boolean canPaste() {
             return (mCopyBuffer != null && mCopyBuffer.length() > 0 && removeImageChar(
                     mCopyBuffer).length() == 0);
@@ -1938,7 +1990,7 @@ public class EditStyledText extends EditText {
                             opt.inJustDecodeBounds = true;
                             BitmapFactory.decodeStream(is, null, opt);
                             is.close();
-                            is =  mEST.getContext().getContentResolver().openInputStream(uri);
+                            is = mEST.getContext().getContentResolver().openInputStream(uri);
                             int width, height;
                             width = opt.outWidth;
                             height = opt.outHeight;
@@ -2039,7 +2091,7 @@ public class EditStyledText extends EditText {
         }
 
         public void setColorAlertParams(CharSequence colortitle, CharSequence[] colornames,
-                CharSequence[] colorInts, CharSequence defaultColorMessage) {
+                                        CharSequence[] colorInts, CharSequence defaultColorMessage) {
             mColorTitle = colortitle;
             mColorNames = colornames;
             mColorInts = colorInts;
@@ -2047,7 +2099,7 @@ public class EditStyledText extends EditText {
         }
 
         public void setSizeAlertParams(CharSequence sizetitle, CharSequence[] sizenames,
-                CharSequence[] sizedisplayints, CharSequence[] sizesendints) {
+                                       CharSequence[] sizedisplayints, CharSequence[] sizesendints) {
             mSizeTitle = sizetitle;
             mSizeNames = sizenames;
             mSizeDisplayInts = sizedisplayints;
@@ -2060,7 +2112,7 @@ public class EditStyledText extends EditText {
         }
 
         public void setMarqueeAlertParams(CharSequence marqueetitle,
-                CharSequence[] marqueenames) {
+                                          CharSequence[] marqueenames) {
             mMarqueeTitle = marqueetitle;
             mMarqueeNames = marqueenames;
         }
@@ -2130,7 +2182,7 @@ public class EditStyledText extends EditText {
         }
 
         private void buildDialogue(CharSequence title, CharSequence[] names,
-                DialogInterface.OnClickListener l) {
+                                   DialogInterface.OnClickListener l) {
             mBuilder.setTitle(title);
             mBuilder.setIcon(0);
             mBuilder.setPositiveButton(null, null);
@@ -2353,7 +2405,7 @@ public class EditStyledText extends EditText {
 
         @Override
         public boolean
-                onKeyDown(TextView widget, Spannable buffer, int keyCode, KeyEvent event) {
+        onKeyDown(TextView widget, Spannable buffer, int keyCode, KeyEvent event) {
             if (DBG) {
                 Log.d(LOG_TAG, "---onkeydown:" + keyCode);
             }
@@ -2861,7 +2913,7 @@ public class EditStyledText extends EditText {
         }
 
         public void onAction(int newMode, Object param) {
-            onAction(newMode, new Object[] { param });
+            onAction(newMode, new Object[]{param});
         }
 
         public void onAction(int newMode) {

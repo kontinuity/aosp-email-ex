@@ -79,7 +79,7 @@ public class SyncStateContentProviderHelper {
     }
 
     public Cursor query(SQLiteDatabase db, String[] projection,
-            String selection, String[] selectionArgs, String sortOrder) {
+                        String selection, String[] selectionArgs, String sortOrder) {
         return db.query(SYNC_STATE_TABLE, projection, selection, selectionArgs,
                 null, null, sortOrder);
     }
@@ -93,7 +93,7 @@ public class SyncStateContentProviderHelper {
     }
 
     public int update(SQLiteDatabase db, ContentValues values,
-            String selection, String[] selectionArgs) {
+                      String selection, String[] selectionArgs) {
         return db.update(SYNC_STATE_TABLE, values, selection, selectionArgs);
     }
 
@@ -129,6 +129,7 @@ public class SyncStateContentProviderHelper {
 
     /**
      * Checks that value is present as at least one of the elements of the array.
+     *
      * @param array the array to check in
      * @param value the value to check for
      * @return true if the value is present in the array

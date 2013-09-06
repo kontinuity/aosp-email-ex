@@ -80,7 +80,9 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
     // This is ContactsContract.PRIMARY_ACCOUNT_TYPE. Available from ICS as hidden
     static final String PRIMARY_ACCOUNT_TYPE = "type_for_primary_account";
 
-    /** The number of photos cached in this Adapter. */
+    /**
+     * The number of photos cached in this Adapter.
+     */
     private static final int PHOTO_CACHE_SIZE = 20;
 
     /**
@@ -88,7 +90,9 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
      * within this many milliseconds.
      */
     private static final int MESSAGE_SEARCH_PENDING_DELAY = 1000;
-    /** Used to prepare "Waiting for more contacts" message. */
+    /**
+     * Used to prepare "Waiting for more contacts" message.
+     */
     private static final int MESSAGE_SEARCH_PENDING = 1;
 
     public static final int QUERY_TYPE_EMAIL = 0;
@@ -112,7 +116,7 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
 
     private static class PhotoQuery {
         public static final String[] PROJECTION = {
-            Photo.PHOTO
+                Photo.PHOTO
         };
 
         public static final int PHOTO = 0;
@@ -123,12 +127,12 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
         public static final Uri URI =
                 Uri.withAppendedPath(ContactsContract.AUTHORITY_URI, "directories");
         public static final String[] PROJECTION = {
-            Directory._ID,              // 0
-            Directory.ACCOUNT_NAME,     // 1
-            Directory.ACCOUNT_TYPE,     // 2
-            Directory.DISPLAY_NAME,     // 3
-            Directory.PACKAGE_NAME,     // 4
-            Directory.TYPE_RESOURCE_ID, // 5
+                Directory._ID,              // 0
+                Directory.ACCOUNT_NAME,     // 1
+                Directory.ACCOUNT_TYPE,     // 2
+                Directory.DISPLAY_NAME,     // 3
+                Directory.PACKAGE_NAME,     // 4
+                Directory.TYPE_RESOURCE_ID, // 5
         };
 
         public static final int ID = 0;
@@ -139,7 +143,9 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
         public static final int TYPE_RESOURCE_ID = 5;
     }
 
-    /** Used to temporarily hold results in Cursor objects. */
+    /**
+     * Used to temporarily hold results in Cursor objects.
+     */
     private static class TemporaryEntry {
         public final String displayName;
         public final String destination;
@@ -174,10 +180,10 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
         public final List<DirectorySearchParams> paramsList;
 
         public DefaultFilterResult(List<RecipientEntry> entries,
-                LinkedHashMap<Long, List<RecipientEntry>> entryMap,
-                List<RecipientEntry> nonAggregatedEntries,
-                Set<String> existingDestinations,
-                List<DirectorySearchParams> paramsList) {
+                                   LinkedHashMap<Long, List<RecipientEntry>> entryMap,
+                                   List<RecipientEntry> nonAggregatedEntries,
+                                   Set<String> existingDestinations,
+                                   List<DirectorySearchParams> paramsList) {
             this.entries = entries;
             this.entryMap = entryMap;
             this.nonAggregatedEntries = nonAggregatedEntries;
@@ -308,11 +314,11 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
 
         @Override
         public CharSequence convertResultToString(Object resultValue) {
-            final RecipientEntry entry = (RecipientEntry)resultValue;
+            final RecipientEntry entry = (RecipientEntry) resultValue;
             final String displayName = entry.getDisplayName();
             final String emailAddress = entry.getDestination();
             if (TextUtils.isEmpty(displayName) || TextUtils.equals(displayName, emailAddress)) {
-                 return emailAddress;
+                return emailAddress;
             } else {
                 return new Rfc822Token(displayName, emailAddress, null).toString();
             }
@@ -439,28 +445,32 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
      * {@link #mEntries} is responsible for showing every result for this Adapter. To
      * construct it, we use {@link #mEntryMap}, {@link #mNonAggregatedEntries}, and
      * {@link #mExistingDestinations}.
-     *
+     * <p/>
      * First, each destination (an email address or a phone number) with a valid contactId is
      * inserted into {@link #mEntryMap} and grouped by the contactId. Destinations without valid
      * contactId (possible if they aren't in local storage) are stored in
      * {@link #mNonAggregatedEntries}.
      * Duplicates are removed using {@link #mExistingDestinations}.
-     *
+     * <p/>
      * After having all results from Cursor objects, all destinations in mEntryMap are copied to
      * {@link #mEntries}. If the number of destinations is not enough (i.e. less than
      * {@link #mPreferredMaxResultCount}), destinations in mNonAggregatedEntries are also used.
-     *
+     * <p/>
      * These variables are only used in UI thread, thus should not be touched in
      * performFiltering() methods.
      */
     private LinkedHashMap<Long, List<RecipientEntry>> mEntryMap;
     private List<RecipientEntry> mNonAggregatedEntries;
     private Set<String> mExistingDestinations;
-    /** Note: use {@link #updateEntries(List)} to update this variable. */
+    /**
+     * Note: use {@link #updateEntries(List)} to update this variable.
+     */
     private List<RecipientEntry> mEntries;
     private List<RecipientEntry> mTempEntries;
 
-    /** The number of directories this adapter is waiting for results. */
+    /**
+     * The number of directories this adapter is waiting for results.
+     */
     private int mRemainingDirectoryCount;
 
     /**
@@ -548,14 +558,16 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
         mAccount = account;
     }
 
-    /** Will be called from {@link AutoCompleteTextView} to prepare auto-complete list. */
+    /**
+     * Will be called from {@link AutoCompleteTextView} to prepare auto-complete list.
+     */
     @Override
     public Filter getFilter() {
         return new DefaultFilter();
     }
 
     public static List<DirectorySearchParams> setupOtherDirectories(Context context,
-            Cursor directoryCursor, Account account) {
+                                                                    Cursor directoryCursor, Account account) {
         final PackageManager packageManager = context.getPackageManager();
         final List<DirectorySearchParams> paramsList = new ArrayList<DirectorySearchParams>();
         DirectorySearchParams preferredDirectory = null;
@@ -633,9 +645,9 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
     }
 
     private static void putOneEntry(TemporaryEntry entry, boolean isAggregatedEntry,
-            LinkedHashMap<Long, List<RecipientEntry>> entryMap,
-            List<RecipientEntry> nonAggregatedEntries,
-            Set<String> existingDestinations) {
+                                    LinkedHashMap<Long, List<RecipientEntry>> entryMap,
+                                    List<RecipientEntry> nonAggregatedEntries,
+                                    Set<String> existingDestinations) {
         if (existingDestinations.contains(entry.destination)) {
             return;
         }
@@ -714,7 +726,9 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
         mEntriesUpdatedObserver = observer;
     }
 
-    /** Resets {@link #mEntries} and notify the event to its parent ListView. */
+    /**
+     * Resets {@link #mEntries} and notify the event to its parent ListView.
+     */
     private void updateEntries(List<RecipientEntry> newEntries) {
         mEntries = newEntries;
         mEntriesUpdatedObserver.onChanged(newEntries);
@@ -927,7 +941,7 @@ public abstract class BaseRecipientAdapter extends BaseAdapter implements Filter
 
     /**
      * Returns a layout id for each item inside auto-complete list.
-     *
+     * <p/>
      * Each View must contain two TextViews (for display name and destination) and one ImageView
      * (for photo). Ids for those should be available via {@link #getDisplayNameId()},
      * {@link #getDestinationId()}, and {@link #getPhotoId()}.

@@ -28,47 +28,61 @@ import java.util.TreeSet;
  * persistent storage and computes retry strategy accordingly.  Handles
  * exponential backoff, periodic rescheduling, event-driven triggering,
  * retry-after moratorium intervals, etc. based on caller-specified parameters.
- *
+ * <p/>
  * <p>This class does not directly perform or invoke any operations,
  * it only keeps track of the schedule.  Somebody else needs to call
  * {@link #getNextTimeMillis()} as appropriate and do the actual work.
  */
 public class OperationScheduler {
-    /** Tunable parameter options for {@link #getNextTimeMillis}. */
+    /**
+     * Tunable parameter options for {@link #getNextTimeMillis}.
+     */
     public static class Options {
-        /** Wait this long after every error before retrying. */
+        /**
+         * Wait this long after every error before retrying.
+         */
         public long backoffFixedMillis = 0;
 
-        /** Wait this long times the number of consecutive errors so far before retrying. */
+        /**
+         * Wait this long times the number of consecutive errors so far before retrying.
+         */
         public long backoffIncrementalMillis = 5000;
 
-        /** Wait this long times 2^(number of consecutive errors so far) before retrying. */
+        /**
+         * Wait this long times 2^(number of consecutive errors so far) before retrying.
+         */
         public int backoffExponentialMillis = 0;
 
-        /** Maximum duration of moratorium to honor.  Mostly an issue for clock rollbacks. */
+        /**
+         * Maximum duration of moratorium to honor.  Mostly an issue for clock rollbacks.
+         */
         public long maxMoratoriumMillis = 24 * 3600 * 1000;
 
-        /** Minimum duration after success to wait before allowing another trigger. */
+        /**
+         * Minimum duration after success to wait before allowing another trigger.
+         */
         public long minTriggerMillis = 0;
 
-        /** Automatically trigger this long after the last success. */
+        /**
+         * Automatically trigger this long after the last success.
+         */
         public long periodicIntervalMillis = 0;
 
         @Override
         public String toString() {
             if (backoffExponentialMillis > 0) {
                 return String.format(
-                    "OperationScheduler.Options[backoff=%.1f+%.1f+%.1f max=%.1f min=%.1f period=%.1f]",
-                    backoffFixedMillis / 1000.0, backoffIncrementalMillis / 1000.0,
-                    backoffExponentialMillis / 1000.0,
-                    maxMoratoriumMillis / 1000.0, minTriggerMillis / 1000.0,
-                    periodicIntervalMillis / 1000.0);
+                        "OperationScheduler.Options[backoff=%.1f+%.1f+%.1f max=%.1f min=%.1f period=%.1f]",
+                        backoffFixedMillis / 1000.0, backoffIncrementalMillis / 1000.0,
+                        backoffExponentialMillis / 1000.0,
+                        maxMoratoriumMillis / 1000.0, minTriggerMillis / 1000.0,
+                        periodicIntervalMillis / 1000.0);
             } else {
                 return String.format(
-                    "OperationScheduler.Options[backoff=%.1f+%.1f max=%.1f min=%.1f period=%.1f]",
-                    backoffFixedMillis / 1000.0, backoffIncrementalMillis / 1000.0,
-                    maxMoratoriumMillis / 1000.0, minTriggerMillis / 1000.0,
-                    periodicIntervalMillis / 1000.0);
+                        "OperationScheduler.Options[backoff=%.1f+%.1f max=%.1f min=%.1f period=%.1f]",
+                        backoffFixedMillis / 1000.0, backoffIncrementalMillis / 1000.0,
+                        maxMoratoriumMillis / 1000.0, minTriggerMillis / 1000.0,
+                        periodicIntervalMillis / 1000.0);
             }
         }
     }
@@ -78,6 +92,7 @@ public class OperationScheduler {
 
     /**
      * Initialize the scheduler state.
+     *
      * @param storage to use for recording the state of operations across restarts/reboots
      */
     public OperationScheduler(SharedPreferences storage) {
@@ -86,20 +101,20 @@ public class OperationScheduler {
 
     /**
      * Parse scheduler options supplied in this string form:
-     *
+     * <p/>
      * <pre>
      * backoff=(fixed)+(incremental)[+(exponential)] max=(maxmoratorium) min=(mintrigger) [period=](interval)
      * </pre>
-     *
+     * <p/>
      * All values are times in (possibly fractional) <em>seconds</em> (not milliseconds).
      * Omitted settings are left at whatever existing default value was passed in.
-     *
-     * <p>
+     * <p/>
+     * <p/>
      * The default options: <code>backoff=0+5 max=86400 min=0 period=0</code><br>
      * Fractions are OK: <code>backoff=+2.5 period=10.0</code><br>
      * The "period=" can be omitted: <code>3600</code><br>
      *
-     * @param spec describing some or all scheduler options.
+     * @param spec    describing some or all scheduler options.
      * @param options to update with parsed values.
      * @return the options passed in (for convenience)
      * @throws IllegalArgumentException if the syntax is invalid
@@ -120,7 +135,7 @@ public class OperationScheduler {
                     options.backoffIncrementalMillis = parseSeconds(pieces[1]);
                 }
                 if (pieces.length > 2 && pieces[2].length() > 0) {
-                    options.backoffExponentialMillis = (int)parseSeconds(pieces[2]);
+                    options.backoffExponentialMillis = (int) parseSeconds(pieces[2]);
                 }
             } else if (param.startsWith("max=")) {
                 options.maxMoratoriumMillis = parseSeconds(param.substring(4));
@@ -145,8 +160,8 @@ public class OperationScheduler {
      *
      * @param options to use for this computation.
      * @return the wall clock time ({@link System#currentTimeMillis()}) when the
-     * next operation should be attempted -- immediately, if the return value is
-     * before the current time.
+     *         next operation should be attempted -- immediately, if the return value is
+     *         before the current time.
      */
     public long getNextTimeMillis(Options options) {
         boolean enabledState = mStorage.getBoolean(PREFIX + "enabledState", true);
@@ -176,13 +191,13 @@ public class OperationScheduler {
         time = Math.max(time, moratoriumTimeMillis);
         time = Math.max(time, lastSuccessTimeMillis + options.minTriggerMillis);
         if (errorCount > 0) {
-            int shift = errorCount-1;
+            int shift = errorCount - 1;
             // backoffExponentialMillis is an int, so we can safely
             // double it 30 times without overflowing a long.
             if (shift > 30) shift = 30;
             long backoff = options.backoffFixedMillis +
-                (options.backoffIncrementalMillis * errorCount) +
-                (((long)options.backoffExponentialMillis) << shift);
+                    (options.backoffIncrementalMillis * errorCount) +
+                    (((long) options.backoffExponentialMillis) << shift);
 
             // Treat backoff like a moratorium: don't let the backoff
             // time grow too large.
@@ -208,7 +223,7 @@ public class OperationScheduler {
      * Return the last time the operation was attempted.  Does not modify any state.
      *
      * @return the wall clock time when {@link #onSuccess()} or {@link
-     * #onTransientError()} was last called.
+     *         #onTransientError()} was last called.
      */
     public long getLastAttemptTimeMillis() {
         return Math.max(
@@ -222,7 +237,7 @@ public class OperationScheduler {
      * gracefully from clock rollbacks which could otherwise strand our timers.
      *
      * @param name of SharedPreferences key
-     * @param max time to allow in result
+     * @param max  time to allow in result
      * @return current value attached to key (default 0), limited by max
      */
     private long getTimeBefore(String name, long max) {
@@ -240,7 +255,7 @@ public class OperationScheduler {
      * minimum intervals.  Use {@link Long#MAX_VALUE} to disable triggering.
      *
      * @param millis wall clock time ({@link System#currentTimeMillis()}) to
-     * trigger another operation; 0 to trigger immediately
+     *               trigger another operation; 0 to trigger immediately
      */
     public void setTriggerTimeMillis(long millis) {
         SharedPreferencesCompat.apply(
@@ -252,12 +267,12 @@ public class OperationScheduler {
      * Limited by {@link #Options.maxMoratoriumMillis}.
      *
      * @param millis wall clock time ({@link System#currentTimeMillis()})
-     * when operations should be allowed again; 0 to remove moratorium
+     *               when operations should be allowed again; 0 to remove moratorium
      */
     public void setMoratoriumTimeMillis(long millis) {
         SharedPreferencesCompat.apply(mStorage.edit()
-                   .putLong(PREFIX + "moratoriumTimeMillis", millis)
-                   .putLong(PREFIX + "moratoriumSetTimeMillis", currentTimeMillis()));
+                .putLong(PREFIX + "moratoriumTimeMillis", millis)
+                .putLong(PREFIX + "moratoriumSetTimeMillis", currentTimeMillis()));
     }
 
     /**

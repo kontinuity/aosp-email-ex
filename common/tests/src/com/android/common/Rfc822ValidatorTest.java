@@ -28,17 +28,17 @@ public class Rfc822ValidatorTest extends TestCase {
     @SmallTest
     public void testEmailValidator() {
         Rfc822Validator validator = new Rfc822Validator("gmail.com");
-        String[] validEmails = new String[] {
-            "a@b.com", "a@b.fr", "a+b@c.com", "a@b.info", "john@example.com", "john@example.fr",
-            "john@corp.example.com",
+        String[] validEmails = new String[]{
+                "a@b.com", "a@b.fr", "a+b@c.com", "a@b.info", "john@example.com", "john@example.fr",
+                "john@corp.example.com",
         };
 
         for (String email : validEmails) {
             assertTrue(email + " should be a valid email address", validator.isValid(email));
         }
 
-        String[] invalidEmails = new String[] {
-            "a", "a@b", "a b", "a@b.12", "john@example..com", "johnexample.com", "john.example.com"
+        String[] invalidEmails = new String[]{
+                "a", "a@b", "a b", "a@b.12", "john@example..com", "johnexample.com", "john.example.com"
         };
 
         for (String email : invalidEmails) {

@@ -30,11 +30,11 @@ import java.util.regex.Pattern;
  * and has the specified domain name added.  It is meant for use with
  * {@link Rfc822Token} and {@link Rfc822Tokenizer}.
  *
+ * @hide
  * @deprecated In the future make sure we don't quietly alter the user's
  *             text in ways they did not intend.  Meanwhile, hide this
  *             class from the public API because it does not even have
  *             a full understanding of the syntax it claims to correct.
- * @hide
  */
 @Deprecated
 public class Rfc822Validator implements AutoCompleteTextView.Validator {
@@ -66,8 +66,8 @@ public class Rfc822Validator implements AutoCompleteTextView.Validator {
         Rfc822Token[] tokens = Rfc822Tokenizer.tokenize(text);
 
         return tokens.length == 1 &&
-               EMAIL_ADDRESS_PATTERN.
-                   matcher(tokens[0].getAddress()).matches();
+                EMAIL_ADDRESS_PATTERN.
+                        matcher(tokens[0].getAddress()).matches();
     }
 
     /**
@@ -76,7 +76,7 @@ public class Rfc822Validator implements AutoCompleteTextView.Validator {
      * tokens.
      *
      * @param remove true to remove tokens with the wrong format, false to
-     *            attempt to fix them
+     *               attempt to fix them
      */
     public void setRemoveInvalid(boolean remove) {
         mRemoveInvalid = remove;
@@ -84,7 +84,7 @@ public class Rfc822Validator implements AutoCompleteTextView.Validator {
 
     /**
      * @return a string in which all the characters that are illegal for the username
-     * or the domain name part of the email address have been removed.
+     *         or the domain name part of the email address have been removed.
      */
     private String removeIllegalCharacters(String s) {
         StringBuilder result = new StringBuilder();
@@ -104,8 +104,8 @@ public class Rfc822Validator implements AutoCompleteTextView.Validator {
             }
 
             if (c == '(' || c == ')' || c == '<' || c == '>' ||
-                c == '@' || c == ',' || c == ';' || c == ':' ||
-                c == '\\' || c == '"' || c == '[' || c == ']') {
+                    c == '@' || c == ',' || c == ';' || c == ':' ||
+                    c == '\\' || c == '"' || c == '[' || c == ']') {
                 continue;
             }
 

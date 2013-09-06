@@ -70,30 +70,30 @@ public class RecipientAlternatesAdapterTest extends AndroidTestCase {
     }
 
     private static MatrixCursor addRow(MatrixCursor c,
-            String displayName,
-            String destination,
-            int destinationType,
-            String destinationLabel,
-            long contactId,
-            long dataId,
-            String photoUri,
-            int displayNameSource
-            ) {
-        c.addRow(new Object[] {displayName, destination, destinationType, destinationLabel,
+                                       String displayName,
+                                       String destination,
+                                       int destinationType,
+                                       String destinationLabel,
+                                       long contactId,
+                                       long dataId,
+                                       String photoUri,
+                                       int displayNameSource
+    ) {
+        c.addRow(new Object[]{displayName, destination, destinationType, destinationLabel,
                 contactId, dataId, photoUri, displayNameSource});
         return c;
     }
 
     private static void assertRow(Cursor c, int position,
-            String displayName,
-            String destination,
-            int destinationType,
-            String destinationLabel,
-            long contactId,
-            long dataId,
-            String photoUri,
-            int displayNameSource
-            ) {
+                                  String displayName,
+                                  String destination,
+                                  int destinationType,
+                                  String destinationLabel,
+                                  long contactId,
+                                  long dataId,
+                                  String photoUri,
+                                  int displayNameSource
+    ) {
         assertTrue(c.moveToPosition(position));
         assertEquals(displayName, c.getString(0));
         assertEquals(destination, c.getString(1));

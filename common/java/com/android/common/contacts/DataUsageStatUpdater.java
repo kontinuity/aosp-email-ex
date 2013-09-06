@@ -40,7 +40,7 @@ import java.util.Set;
 
 /**
  * Convenient class for updating usage statistics in ContactsProvider.
- *
+ * <p/>
  * Applications like Email, Sms, etc. can promote recipients for better sorting with this class
  *
  * @see ContactsContract.Contacts
@@ -54,7 +54,7 @@ public class DataUsageStatUpdater {
      */
     public static final class DataUsageFeedback {
         static final Uri FEEDBACK_URI =
-            Uri.withAppendedPath(Data.CONTENT_URI, "usagefeedback");
+                Uri.withAppendedPath(Data.CONTENT_URI, "usagefeedback");
 
         static final String USAGE_TYPE = "type";
         public static final String USAGE_TYPE_CALL = "call";
@@ -71,13 +71,13 @@ public class DataUsageStatUpdater {
     /**
      * Updates usage statistics using comma-separated RFC822 address like
      * "Joe <joe@example.com>, Due <due@example.com>".
-     *
+     * <p/>
      * This will cause Disk access so should be called in a background thread.
      *
      * @return true when update request is correctly sent. False when the request fails,
-     * input has no valid entities.
+     *         input has no valid entities.
      */
-    public boolean updateWithRfc822Address(Collection<CharSequence> texts){
+    public boolean updateWithRfc822Address(Collection<CharSequence> texts) {
         if (texts == null) {
             return false;
         } else {
@@ -94,13 +94,12 @@ public class DataUsageStatUpdater {
 
     /**
      * Update usage statistics information using a list of email addresses.
-     *
+     * <p/>
      * This will cause Disk access so should be called in a background thread.
      *
-     * @see #update(Collection, Collection, String)
-     *
      * @return true when update request is correctly sent. False when the request fails,
-     * input has no valid entities.
+     *         input has no valid entities.
+     * @see #update(Collection, Collection, String)
      */
     public boolean updateWithAddress(Collection<String> addresses) {
         if (Log.isLoggable(TAG, Log.DEBUG)) {
@@ -118,7 +117,7 @@ public class DataUsageStatUpdater {
                     .append(TextUtils.join(",", questionMarks))
                     .append(")");
             final Cursor cursor = mResolver.query(Email.CONTENT_URI,
-                    new String[] {Email.CONTACT_ID, Email._ID}, whereBuilder.toString(),
+                    new String[]{Email.CONTACT_ID, Email._ID}, whereBuilder.toString(),
                     whereArgs.toArray(new String[0]), null);
 
             if (cursor == null) {
@@ -128,7 +127,7 @@ public class DataUsageStatUpdater {
                 final Set<Long> dataIds = new HashSet<Long>(cursor.getCount());
                 try {
                     cursor.move(-1);
-                    while(cursor.moveToNext()) {
+                    while (cursor.moveToNext()) {
                         contactIds.add(cursor.getLong(0));
                         dataIds.add(cursor.getLong(1));
                     }
@@ -144,13 +143,12 @@ public class DataUsageStatUpdater {
 
     /**
      * Update usage statistics information using a list of phone numbers.
-     *
+     * <p/>
      * This will cause Disk access so should be called in a background thread.
      *
-     * @see #update(Collection, Collection, String)
-     *
      * @return true when update request is correctly sent. False when the request fails,
-     * input has no valid entities.
+     *         input has no valid entities.
+     * @see #update(Collection, Collection, String)
      */
     public boolean updateWithPhoneNumber(Collection<String> numbers) {
         if (Log.isLoggable(TAG, Log.DEBUG)) {
@@ -168,7 +166,7 @@ public class DataUsageStatUpdater {
                     .append(TextUtils.join(",", questionMarks))
                     .append(")");
             final Cursor cursor = mResolver.query(Phone.CONTENT_URI,
-                    new String[] {Phone.CONTACT_ID, Phone._ID}, whereBuilder.toString(),
+                    new String[]{Phone.CONTACT_ID, Phone._ID}, whereBuilder.toString(),
                     whereArgs.toArray(new String[0]), null);
 
             if (cursor == null) {
@@ -178,7 +176,7 @@ public class DataUsageStatUpdater {
                 final Set<Long> dataIds = new HashSet<Long>(cursor.getCount());
                 try {
                     cursor.move(-1);
-                    while(cursor.moveToNext()) {
+                    while (cursor.moveToNext()) {
                         contactIds.add(cursor.getLong(0));
                         dataIds.add(cursor.getLong(1));
                     }
@@ -193,7 +191,7 @@ public class DataUsageStatUpdater {
 
     /**
      * @return true when one or more of update requests are correctly sent.
-     * False when all the requests fail.
+     *         False when all the requests fail.
      */
     private boolean update(Collection<Long> contactIds, Collection<Long> dataIds, String type) {
         final long currentTimeMillis = System.currentTimeMillis();
